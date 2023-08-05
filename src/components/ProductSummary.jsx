@@ -13,7 +13,6 @@ const categoryIcon = <BiCategory size={40} color="#fff" />;
 const outOfStockIcon = <BsCartX size={40} color="#fff" />;
 
 const  { inventoryDetails } = useSelector(state=> state.inventory);
-console.log("inventoryDetails ",inventoryDetails  )
 
 function calculateTotalPrice(inventoryDetails) {
   let totalPrice = 0;

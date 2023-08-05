@@ -48,7 +48,7 @@ console.log("dfdf",recipientemail)
     console.log("form data ",formData)
     setLoading(true);
     try {
-      await axios.post('http://localhost:8000/api/sales/sendemail', formData, {
+      await axios.post(`${vit.meta.env.VITE_APP_BACKEND_URL}/sales/sendemail`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

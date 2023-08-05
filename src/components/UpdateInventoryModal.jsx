@@ -33,12 +33,12 @@ console.log("rowm ",row)
       };
 
       const response = await axios.put(
-        `http://localhost:8000/api/inventoryitem/updateinventory/${row._id}`,
+        `${vite.meta.env.VITE_APP_BACKEND_URL}/inventoryitem/updateinventory/${row._id}`,
         updatedData,
         config
       );
       const inventory = await axios.get(
-        'http://localhost:8000/api/inventoryitem/getallinventory',
+        `${vite.meta.env.VITE_APP_BACKEND_URL}/inventoryitem/getallinventory`,
         config
       );
 

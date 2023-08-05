@@ -46,7 +46,7 @@ function SalesDetailsPage() {
 
   const fetchSales = async () => {
     try {
-      const apiUrl = "http://localhost:8000/api/sales/getallsalesdetails";
+      const apiUrl = `${vite.meta.env.VITE_APP_BACKEND_URL}/sales/getallsalesdetails`;
       const userToken = userDetails?.token;
 
       const config = {
@@ -128,15 +128,6 @@ function SalesDetailsPage() {
       </button>
 
 
-
-
-
-
-
-
-
-
-      
         <EmailExportModal
           isOpen={isEmailModalOpen}
           onClose={handleCloseEmailModal}

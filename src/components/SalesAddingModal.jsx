@@ -31,7 +31,7 @@ function SalesAddingModal({ isOpen, onClose }) {
     try {
       setLoading(true);
 
-      const apiUrl = `${vite.meta.env.VITE_APP_BACKEND_URL}/sales/addsale`;
+      const apiUrl = `${import.meta.env.VITE_APP_BACKEND_URL}/sales/addsale`;
       const userToken = userDetails.token;
 
       const config = {
@@ -63,7 +63,7 @@ function SalesAddingModal({ isOpen, onClose }) {
 
   const fetchSales = async () => {
     try {
-      const apiUrl = `${vite.meta.env.VITE_APP_BACKEND_URL}/sales/getallsalesdetails`;
+      const apiUrl = `${import.meta.env.VITE_APP_BACKEND_URL}/sales/getallsalesdetails`;
       const userToken = userDetails.token;
 
       const config = {

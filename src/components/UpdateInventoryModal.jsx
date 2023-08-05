@@ -23,7 +23,7 @@ function UpdateInventoryModal({ row, closeModal }) {
   };
   const userToken = userDetails.token;
   const handleSubmit = async (e) => {
-console.log("rowm ",row)
+
     e.preventDefault();
     try {
       const config = {
@@ -33,12 +33,12 @@ console.log("rowm ",row)
       };
 
       const response = await axios.put(
-        `${vite.meta.env.VITE_APP_BACKEND_URL}/inventoryitem/updateinventory/${row._id}`,
+        `${import.meta.env.VITE_APP_BACKEND_URL}/inventoryitem/updateinventory/${row._id}`,
         updatedData,
         config
       );
       const inventory = await axios.get(
-        `${vite.meta.env.VITE_APP_BACKEND_URL}/inventoryitem/getallinventory`,
+        `${import.meta.env.VITE_APP_BACKEND_URL}/inventoryitem/getallinventory`,
         config
       );
 

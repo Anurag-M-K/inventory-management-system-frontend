@@ -18,7 +18,7 @@ function SignupForm() {
   const handleSubmit = async (values) => {
     try {
       setLoading(true)
-      const response = await axios.post(`${vite.meta.env.VITE_APP_BACKEND_URL}/signup`, values); 
+      const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/signup`, values); 
       setLoading(false)
 
       toast.success("Registered successfully")

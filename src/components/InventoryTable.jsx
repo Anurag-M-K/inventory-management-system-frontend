@@ -30,7 +30,7 @@ function InventoryTable() {
   useEffect(() => {
       (async () => {
         const inventory = await axios.get(
-          `${vite.meta.env.VITE_APP_BACKEND_URL}/inventoryitem/getallinventory`,
+          `${import.meta.env.VITE_APP_BACKEND_URL}/inventoryitem/getallinventory`,
           config
         );
         dispatch(setInventoryDetails(inventory.data.inventoryItems));
@@ -60,11 +60,11 @@ function InventoryTable() {
 
       if (result.isConfirmed) {
         const response = await axios.delete(
-          `${vite.meta.env.VITE_APP_BACKEND_URL}/inventoryitem/deleteinventory/${row._id}`,
+          `${import.meta.env.VITE_APP_BACKEND_URL}/inventoryitem/deleteinventory/${row._id}`,
           config
         );
         const inventory = await axios.get(
-          `${vite.meta.env.VITE_APP_BACKEND_URL}/inventoryitem/getallinventory`,
+          `${import.meta.env.VITE_APP_BACKEND_URL}/inventoryitem/getallinventory`,
           config
         );
         dispatch(setInventoryDetails(inventory.data.inventoryItems));

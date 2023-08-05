@@ -3,20 +3,23 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import controlImage from "../assets/control.png";
 import logoImage from "../assets/logo.png";
-import Chart_fill from "../assets/Chart_fill.png";
-import Chat from "../assets/Chat.png";
-import User from "../assets/User.png";
-import Calendar from "../assets/Calendar.png";
+// import Chart_fill from "../assets/Chart_fill.png";
+// import Chat from "../assets/Chat.png";
+// import User from "../assets/User.png";
+// import Calendar from "../assets/Calendar.png";
+// import { RxDashboard } from 'react-icons/fa';
+import { FaChartBar, FaComments, FaUser, FaCalendar, FaSearch, FaTachometerAlt } from 'react-icons/fa'; // Import the required icon components
+
 
 const Sidebar = ({ children, onAddProductClick }) => {
   const [open, setOpen] = useState(true);
   const [activeTab, setActiveTab] = useState("Dashboard"); // State variable to track active tab
   const Menus = [
-    { title: "Dashboard", src:"/src/assets/Chart_fill.png" },
-    { title: "Add Products",  src:"/src/assets/Chat.png" },
-    { title: "Costumers", src:"/src/assets/User.png", gap: true },
-    { title: "Sales", src:"/src/assets/Calendar.png" },
-    { title: "Items", src:"/src/assets/Search.png" },
+    { title: "Dashboard", icon: <FaTachometerAlt /> }, // Use the FaTachometerAlt icon for the Dashboard
+    { title: "Add Products",  icon: <FaComments /> }, // Use the FaComments icon for Add Products
+    { title: "Costumers", icon: <FaUser />, gap: true }, // Use the FaUser icon for Costumers
+    { title: "Sales", icon: <FaCalendar /> }, // Use the FaCalendar icon for Sales
+    { title: "Items", icon: <FaSearch /> }, // Use the FaSearch icon for Items
   ];
 
   const { bluring } = useSelector((state) => state.blur);
@@ -81,7 +84,7 @@ const Sidebar = ({ children, onAddProductClick }) => {
               }`}
               onClick={() => handleMenuClick(Menu.title)}
             >
-              <img src={Menu.src} />
+              <img src={Menu.icon} />
               <span
                 className={`${!open && "hidden"} origin-left duration-200`}
               >

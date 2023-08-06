@@ -22,6 +22,8 @@ function SalesReports() {
   const [selectedOption, setSelectedOption] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [totalAmount, setTotalAmount] = useState(0);
+
 
   //printing function of sales report
   const handlePrint = useReactToPrint({
@@ -79,6 +81,8 @@ function SalesReports() {
       setfilteredSales(newData);
     }
   };
+
+  
 
   const columns = [
     {
@@ -151,6 +155,17 @@ function SalesReports() {
     }
   };
 
+  // const handleDateFilter = () => {
+  //   // Filter by date range
+  //   const fromDateObject = new Date(fromDate);
+  //   const toDateObject = new Date(toDate);
+  //   const newData = salesData.filter((row) => {
+  //     const rowDate = new Date(row.date);
+  //     return rowDate >= fromDateObject && rowDate <= toDateObject;
+  //   });
+  //   setfilteredSales(newData);
+  // };
+
   const handleDateFilter = () => {
     // Filter by date range
     const fromDateObject = new Date(fromDate);
@@ -159,13 +174,18 @@ function SalesReports() {
       const rowDate = new Date(row.date);
       return rowDate >= fromDateObject && rowDate <= toDateObject;
     });
+  
+    // Calculate the total amount of the filtered data
+    const total = newData.reduce((acc, curr) => acc + curr.cash, 0);
+    setTotalAmount(total);
+  
     setfilteredSales(newData);
   };
-
+  
   return (
     <div>
       <h1 className="text-center mx-5 font-medium text-2xl mt-4">
-        SALES DETAILS
+        SALES REPORT
       </h1>
 
       <div className="text-end m-5  ">
@@ -196,9 +216,8 @@ function SalesReports() {
           )}
         </div>
 
-        <div className="md:flex hidden items-baseline"></div>
 
-        <div className="flex flex-wrap justify-end gap-5 m-5">
+        <div className="md:flex hidden flex-wrap justify-end gap-5 m-5">
           <button
             className="bg-gray-500 px-2 rounded py-1 hover:scale-90 transition duration-300 mx-2 n text-white"
             onClick={handlePrint}
@@ -264,6 +283,11 @@ function SalesReports() {
             noDataComponent="No data found"
           />
         </div>
+        <div>
+      <p className="text-xl font-semibold text-blue-700">
+        Total Amount: {totalAmount} {/* Display the total amount */}
+      </p>
+    </div>
       </div>
       <Toaster />
     </div>

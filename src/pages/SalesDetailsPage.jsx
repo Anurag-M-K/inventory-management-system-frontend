@@ -20,6 +20,10 @@ function SalesDetailsPage() {
   const componentRef = useRef();
   const { salesData } = useSelector((state) => state.sales);
   const [ selectedOption , setSelectedOption ] = useState('')
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
+
+
 
   //printing function of sales report
   const handlePrint = useReactToPrint({
@@ -147,6 +151,18 @@ function SalesDetailsPage() {
   };
   
 
+  const handleDateFilter = () => {
+    // Filter by date range
+    const fromDateObject = new Date(fromDate);
+    const toDateObject = new Date(toDate);
+    const newData = salesData.filter((row) => {
+      const rowDate = new Date(row.date);
+      return rowDate >= fromDateObject && rowDate <= toDateObject;
+    });
+    setfilteredSales(newData);
+  };
+
+
   return (
     <div>
       <h1 className="text-center mx-5 font-medium text-2xl mt-4">SALES DETAILS</h1>
@@ -192,6 +208,33 @@ function SalesDetailsPage() {
       </button>
 
 
+     
+ 
+  
+
+      
+      </div>
+
+      <div className="flex justify-end gap-5 m-5">
+      <button
+          className="bg-gray-500 px-2 rounded py-1 hover:scale-90 transition duration-300 mx-2 n text-white"
+          onClick={handlePrint}
+        >
+        Print
+      </button>
+      <CSVLink
+          filename="Sales Report"
+          data={filteredSales.length > 0 ? filteredSales : sales}
+          className="hover:scale-90 transition duration-300 bg-green-600 rounded px-2 py-1 text-white "
+        >
+        Export data in Excel
+        </CSVLink>
+        <button
+          className="bg-red-500 text-white rounded px-2 py-1 hover:scale-90 transition duration-300 mx-2 "
+          onClick={generatePDF}
+        >
+          PDF
+        </button>
         <EmailExportModal
           isOpen={isEmailModalOpen}
           onClose={handleCloseEmailModal}
@@ -202,33 +245,30 @@ function SalesDetailsPage() {
         >
           Send Email
         </button>
-        <button
-          className="bg-red-500 text-white rounded px-2 py-1 hover:scale-90 transition duration-300 mx-2 "
-          onClick={generatePDF}
-        >
-          PDF
-        </button>
-        <CSVLink
-          filename="Sales Report"
-          data={filteredSales.length > 0 ? filteredSales : sales}
-          className="hover:scale-90 transition duration-300 bg-green-600 rounded px-2 py-1 text-white "
-        >
-        Export data in Excel
-        </CSVLink>
+            <input
+              className="border-2 border-black rounded"
+              type="date"
+              value={fromDate}
+              onChange={(e) => setFromDate(e.target.value)}
+            />
+            <input
+              className="border-2 border-black rounded"
+              type="date"
+              value={toDate}
+              onChange={(e) => setToDate(e.target.value)}
+            />
+            
+            <button
+              className="bg-blue-500 px-2 rounded py-1 hover:scale-90 transition duration-300 text-white"
+              onClick={handleDateFilter}
+            >
+              Filter by Date
+            </button>
+         
 
-        <button
-          className="bg-gray-500 px-2 rounded py-1 hover:scale-90 transition duration-300 mx-2 n text-white"
-          onClick={handlePrint}
-        >
-        Print
-      </button>
-      </div>
 
-        <input
-          className="border-2 border-black rounded"
-          onChange={handleFilter}
-          type="text"
-        />
+         
+          </div>
       </div>
       <div className="m-5 w-auto" ref={componentRef}>
         <div ref={componentRef} className="table-container overflow-x-auto">

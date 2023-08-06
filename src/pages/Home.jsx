@@ -36,7 +36,7 @@ const Home = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2    mt-16">
-        <div className="flex justify-center items-center flex-col ">
+        <div className="flex mt-20 items-center flex-col ">
           <div className="p-5 md:ms-10">
             <h2 className="text-white my-3 text-4xl tracking-widest font-bold">
               INVENTORY MANAGEMENT

@@ -90,7 +90,7 @@ function CustomerLedger() {
   return (
     <div>
       <div>
-      <h1 className="text-center font-bold mt-5">CUSTOMER LEDGER DETAILS</h1>
+      <h1 className="text-center text-2xl font-bold mt-5">CUSTOMER LEDGER DETAILS</h1>
         <div className="m-5">
           <h1 className="m-2">Customer name : <span className="font-medium ">{customerLedger?.customer?.name}</span></h1>
           <h1 className="m-2">Mobile : <span className="font-medium ">{customerLedger?.customer?.mobile}</span></h1>

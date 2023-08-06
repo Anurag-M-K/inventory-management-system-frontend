@@ -7,7 +7,8 @@ import { setSalesData } from "../redux/features/salesSlice";
 import { Toaster, toast } from "react-hot-toast";
 import { useReactToPrint } from "react-to-print";
 import { CSVLink } from "react-csv";
-import EmailExportModal from "../components/EmailExportModal";
+import Dropdown from "react-dropdown-select";
+import EmailExportModal from '../components/EmailExportModal'
 
 function SalesDetailsPage() {
   const { userDetails } = useSelector((state) => state.user);
@@ -18,7 +19,7 @@ function SalesDetailsPage() {
   const dispatch = useDispatch();
   const componentRef = useRef();
   const { salesData } = useSelector((state) => state.sales);
-  
+  const [ selectedOption , setSelectedOption ] = useState('')
 
   //printing function of sales report
   const handlePrint = useReactToPrint({
@@ -114,16 +115,79 @@ function SalesDetailsPage() {
     onAfterPrint: () => alert("Report saved in PDF"),
   });
 
+  const dropdownOptions = [
+    { label: "PDF", value: "pdf" },
+    { label: "Excel", value: "excel" },
+    { label: "Print", value: "print" },
+    { label: "Add Sale", value: "addSale" },
+    { label: "Send Email", value: "sendEmail" },
+  ];const handleDropdownChange = (selectedItems) => {
+    const selectedValue = selectedItems[0].value;
+    setSelectedOption(selectedValue);
+  
+    switch (selectedValue) {
+      case "pdf":
+        generatePDF();
+        break;
+      case "excel":
+        // Logic to export data in Excel
+        break;
+      case "print":
+        handlePrint();
+        break;
+      case "addSale":
+        handleOpenModal();
+        break;
+      case "sendEmail":
+        handleOpenEmailModal();
+        break;
+      default:
+        break;
+    }
+  };
+  
+
   return (
     <div>
       <h1 className="text-center mx-5 font-medium text-2xl mt-4">SALES DETAILS</h1>
       <SalesAddingModal isOpen={isSalesModalOpen} onClose={handleCloseModal} />
      
       <div className="text-end m-5  ">
+
+      <div className="text-end m-5 md:hidden">
+  <Dropdown
+    options={dropdownOptions}
+    values={[selectedOption]}
+    onChange={handleDropdownChange}
+    placeholder="Select an option"
+    color="gray"
+  />
+  {selectedOption === "excel" && (
+    <CSVLink
+      filename="Sales Report"
+      data={filteredSales.length > 0 ? filteredSales : sales}
+      className="hover:scale-90 transition duration-300 bg-green-600 rounded px-2 py-1 text-white"
+    >
+      Export data in Excel
+    </CSVLink>
+  )}
+  {selectedOption === "print" && (
+    <button
+      className="bg-gray-500 px-2 rounded py-1 hover:scale-90 transition duration-300 mx-2 n text-white"
+      onClick={handlePrint}
+    >
+      Print
+    </button>
+  )}
+
+</div>
+
+<div className="md:flex hidden items-baseline">
+
       <button
         className="bg-orange-400  hover:scale-90 transition duration-300 p-1 text-white rounded mt-5 mx-5 px-2"
         onClick={handleOpenModal}
-      >
+        >
         Add Sale
       </button>
 
@@ -149,15 +213,16 @@ function SalesDetailsPage() {
           data={filteredSales.length > 0 ? filteredSales : sales}
           className="hover:scale-90 transition duration-300 bg-green-600 rounded px-2 py-1 text-white "
         >
-          Export data in Excel
+        Export data in Excel
         </CSVLink>
 
         <button
           className="bg-gray-500 px-2 rounded py-1 hover:scale-90 transition duration-300 mx-2 n text-white"
           onClick={handlePrint}
         >
-          Print
-        </button>
+        Print
+      </button>
+      </div>
 
         <input
           className="border-2 border-black rounded"
@@ -166,7 +231,7 @@ function SalesDetailsPage() {
         />
       </div>
       <div className="m-5 w-auto" ref={componentRef}>
-        <div ref={componentRef} className="w-auto">
+        <div ref={componentRef} className="table-container overflow-x-auto">
           <DataTable
             id="table-to-xls" // Set an id for the table
             className="table"

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import SignupForm from './pages/Signup';
 import LoginForm from './pages/LoginForm';
@@ -15,6 +15,7 @@ import SalesDetailsPage from './pages/SalesDetailsPage';
 import CustomerLedger from './pages/CustomerLedger';
 import ItemsReports from './pages/ItemsReports';
 import EmailExport from './components/EmailExport';
+import SalesReports from './pages/SalesReports';
 
 
 function routes() {
@@ -23,6 +24,7 @@ function routes() {
   const { bluring } = useSelector(state => state.blur)
 
   const handleAddProductClick = () => {
+    console.log("here")
     setIsModalOpen(true);
     dispatch(setBlur(true))
   };
@@ -30,7 +32,10 @@ function routes() {
   const closeModal = () => {
     dispatch(setBlur(false))
     setIsModalOpen(false);
+  
   };
+
+  console.log("from routes ",isModalOpen)
 
   return (
     <BrowserRouter>
@@ -87,6 +92,16 @@ function routes() {
            <Sidebar  onAddProductClick={handleAddProductClick}>
               <Layout>
                 <ItemsReports />
+              </Layout>
+            </Sidebar>
+            </PrivateRoutes>
+          }
+        />
+            <Route path="/salesreports" element={
+           <PrivateRoutes>
+           <Sidebar  onAddProductClick={handleAddProductClick}>
+              <Layout>
+                <SalesReports />
               </Layout>
             </Sidebar>
             </PrivateRoutes>
